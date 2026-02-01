@@ -550,7 +550,7 @@ export default function Profile() {
             gap: 30px;
           }
           .account-card {
-            max-width: 100%;
+            max-width: 600px;
             margin: 0 auto;
           }
           .history-section {
@@ -575,11 +575,13 @@ export default function Profile() {
             padding: 25px; 
             width: 100%;
             box-sizing: border-box;
+            max-width: 100%;
           }
           .navbar {
             margin-top: 20px;
             margin-bottom: 20px;
             width: 100%;
+            border-radius: var(--rounded);
           }
           .history-grid {
             grid-template-columns: 1fr;
@@ -588,7 +590,32 @@ export default function Profile() {
           .history-card {
             width: 100%;
             box-sizing: border-box;
+            flex-direction: column; /* Stack contents on mobile */
+            text-align: center;
           }
+          .history-icon {
+            margin-bottom: 10px;
+          }
+        }
+
+        @media (max-width: 480px) {
+            .section-title-small {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            .info-group label, .password-form label {
+                font-size: 0.8rem;
+            }
+            .read-only-input, .password-input-row input {
+                font-size: 0.95rem;
+            }
+            .password-input-row {
+                flex-direction: column;
+            }
+            .password-input-row .btn-secondary {
+                width: 100%;
+                margin-top: 10px;
+            }
         }
       `}</style>
 

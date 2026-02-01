@@ -177,6 +177,11 @@ function ResourcesContent() {
   const saveJournal = async () => {
     if (!selectedResource) return;
 
+    if (!journalEntry.trim()) {
+      showNotification("Please write something before saving. Inky is listening... 🐙", 'info');
+      return;
+    }
+
     if (user) {
       // Save to Supabase
       const { error } = await supabase
