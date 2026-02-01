@@ -461,6 +461,9 @@ export default function Login() {
         }
 
         @media (max-width: 850px) {
+          .auth-page {
+            padding-top: 20px;
+          }
           .auth-container {
             flex-direction: column;
             gap: 30px;
@@ -480,6 +483,13 @@ export default function Login() {
           }
         }
       `}</style>
+
+      {/* Toast Notification */}
+      <Toast
+        message={notification.message}
+        type={notification.type}
+        onClose={() => setNotification({ message: '', type: 'success' })}
+      />
     </main >
   );
 }

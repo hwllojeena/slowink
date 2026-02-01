@@ -7,145 +7,153 @@ import { useRouter } from "next/navigation";
 import Toast from "@/components/Toast";
 
 export default function Signup() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [notification, setNotification] = useState({ message: '', type: 'success' });
-    const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [notification, setNotification] = useState({ message: '', type: 'success' });
+  const router = useRouter();
 
-    const showNotification = (message, type = 'success') => {
-        setNotification({ message, type });
-    };
+  const showNotification = (message, type = 'success') => {
+    setNotification({ message, type });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-        try {
-            // 1. Sign up the user
-            const { data: authData, error: authError } = await supabase.auth.signUp({
-                email,
-                password,
-            });
+    try {
+      // 1. Sign up the user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
 
-            if (authError) throw authError;
+      if (authError) throw authError;
 
-            if (authData.user) {
-                // 2. Create the user profile
-                const { error: profileError } = await supabase
-                    .from('profiles')
-                    .insert({
-                        id: authData.user.id,
-                        full_name: name,
-                    });
+      if (authData.user) {
+        // 2. Create the user profile
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: authData.user.id,
+            full_name: name,
+          });
 
-                if (profileError) throw profileError;
+        if (profileError) throw profileError;
 
-                showNotification("Account created successfully! Welcome to Slowink. 🐙✨", 'success');
-                setTimeout(() => router.push('/'), 2000);
-            }
-        } catch (err) {
-            showNotification(err.message, 'error');
-        } finally {
-            setLoading(false);
-        }
-    };
+        showNotification("Account created successfully! Welcome to Slowink. 🐙✨", 'success');
+        setTimeout(() => router.push('/login'), 2000);
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      let userMessage = err.message;
 
-    return (
-        <main className="auth-page">
-            <div className="container auth-container">
-                <div className="auth-mascot-container left-mascot">
-                    <Image
-                        src="/assets/inky-signup-magic.png"
-                        alt="Magic Inky mascot"
-                        width={280}
-                        height={280}
-                        className="auth-mascot"
-                    />
-                </div>
+      if (err.message === 'Failed to fetch' || err.name === 'TypeError') {
+        userMessage = "Network error: Failed to connect to Supabase. This could be due to an ad blocker, firewall, or missing environment variables. Check your browser console for details.";
+        console.warn('Network request failed. Possible causes: Ad-blocker, Firewall, or invalid URL configuration.');
+      }
 
-                <div className="auth-card glass">
-                    <Link href="/" className="back-home">← Back to home</Link>
-                    <div className="auth-header">
-                        <h2>Join Slowink</h2>
-                        <p>Start your journey to calm and mindfulness.</p>
-                    </div>
+      showNotification(userMessage, 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                    <form className="auth-form" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="name">Full Name</label>
-                            <input
-                                type="text"
-                                id="name"
-                                placeholder="Inky the Octopus"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="inky@slowink.id"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <div className="password-input-wrapper">
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    id="password"
-                                    placeholder="••••••••"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                    minLength={6}
-                                />
-                                <button
-                                    type="button"
-                                    className="toggle-password"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                    aria-label={showPassword ? "Hide password" : "Show password"}
-                                >
-                                    {showPassword ? (
-                                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style={{ opacity: 0.6 }}>
-                                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                            <line x1="1" y1="1" x2="23" y2="23"></line>
-                                        </svg>
-                                    ) : (
-                                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style={{ opacity: 0.6 }}>
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        </svg>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                        <button
-                            type="submit"
-                            className="btn-primary auth-submit"
-                            disabled={loading}
-                        >
-                            {loading ? "Creating Account..." : "Create Account"}
-                        </button>
-                    </form>
+  return (
+    <main className="auth-page">
+      <div className="container auth-container">
+        <div className="auth-mascot-container left-mascot">
+          <Image
+            src="/assets/inky-signup-magic.png"
+            alt="Magic Inky mascot"
+            width={280}
+            height={280}
+            className="auth-mascot"
+          />
+        </div>
 
-                    <div className="auth-footer">
-                        <p>Already have an account? <Link href="/login">Log in</Link></p>
-                    </div>
-                </div>
+        <div className="auth-card glass">
+          <Link href="/" className="back-home">← Back to home</Link>
+          <div className="auth-header">
+            <h2>Join Slowink</h2>
+            <p>Start your journey to calm and mindfulness.</p>
+          </div>
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="name">Full Name</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Inky the Octopus"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
             </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="inky@slowink.id"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style={{ opacity: 0.6 }}>
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                      <line x1="1" y1="1" x2="23" y2="23"></line>
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style={{ opacity: 0.6 }}>
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="btn-primary auth-submit"
+              disabled={loading}
+            >
+              {loading ? "Creating Account..." : "Create Account"}
+            </button>
+          </form>
 
-            <style jsx global>{`
+          <div className="auth-footer">
+            <p>Already have an account? <Link href="/login">Log in</Link></p>
+          </div>
+        </div>
+      </div>
+
+      <style jsx global>{`
         .auth-page {
           min-height: 100vh;
           background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
@@ -294,6 +302,9 @@ export default function Signup() {
         }
 
         @media (max-width: 850px) {
+          .auth-page {
+            padding-top: 20px;
+          }
           .auth-container {
             flex-direction: column;
             gap: 30px;
@@ -314,12 +325,12 @@ export default function Signup() {
         }
       `}</style>
 
-            {/* Toast Notification */}
-            <Toast
-                message={notification.message}
-                type={notification.type}
-                onClose={() => setNotification({ message: '', type: 'success' })}
-            />
-        </main>
-    );
+      {/* Toast Notification */}
+      <Toast
+        message={notification.message}
+        type={notification.type}
+        onClose={() => setNotification({ message: '', type: 'success' })}
+      />
+    </main>
+  );
 }

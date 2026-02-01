@@ -411,7 +411,7 @@ function ResourcesContent() {
           font-size: 5rem;
           font-weight: 700;
           color: var(--secondary);
-          margin: 20px 0;
+          margin: 0px 0 30px 0;
           font-variant-numeric: tabular-nums;
         }
         .timer-modes {
