@@ -33,13 +33,39 @@ body {
   color: var(--text);
   background-color: var(--bg-light);
   line-height: 1.6;
+  font-size: 16px;
+  /* Base font size */
 }
 
 h1,
 h2,
 h3 {
-  font-weight: 700;
   color: var(--secondary);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+input,
+textarea,
+button,
+select {
+  font-family: inherit;
+  font-size: 1rem;
 }
 
 .section-subtitle,
@@ -47,6 +73,7 @@ h3 {
 .hero-subtitle,
 .showcase-info p {
   color: var(--accent) !important;
+  font-size: 1.1rem;
 }
 
 a {
@@ -132,7 +159,8 @@ section {
 
 .footer-logo p {
   margin-top: 10px;
-  color: var(--text-light);
+  color: var(--secondary);
+  font-weight: 600;
 }
 
 .footer-links {

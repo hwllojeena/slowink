@@ -651,7 +651,7 @@ function ResourcesContent() {
 
         @media (max-width: 768px) {
           .container {
-            padding: 0 25px;
+            padding: 0 20px;
           }
           .logo-img {
             width: 130px !important;
@@ -819,7 +819,7 @@ function ResourcesContent() {
           border: 1px solid rgba(212, 157, 179, 0.3);
           background: white;
           font-family: inherit;
-          font-size: 0.95rem;
+          font-size: 1rem;
           margin-bottom: 15px;
           resize: none;
           box-sizing: border-box;

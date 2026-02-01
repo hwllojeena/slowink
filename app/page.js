@@ -263,7 +263,7 @@ export default function Home() {
       {/* Styles for the page */}
       <style jsx global>{`
         .section-title {
-          font-size: 2.5rem;
+          font-size: 2.2rem;
           margin-bottom: 24px;
           text-align: center;
         }
@@ -543,7 +543,7 @@ export default function Home() {
           line-height: 1.2;
         }
         .hero-subtitle {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           color: var(--text-light);
           margin-bottom: 40px;
           max-width: 600px;
@@ -603,7 +603,7 @@ export default function Home() {
 
         @media (max-width: 768px) {
           .container {
-            padding: 0 25px;
+            padding: 0 20px;
             width: 100%;
             box-sizing: border-box;
           }
@@ -700,10 +700,10 @@ export default function Home() {
             font-size: 1.6rem;
           }
           .container {
-            padding: 0 35px;
+            padding: 0 20px;
           }
           .hero-content {
-             max-width: calc(100vw - 70px);
+             max-width: calc(100vw - 40px);
           }
         }
       `}</style>

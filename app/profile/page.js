@@ -212,7 +212,7 @@ export default function Profile() {
                   <input
                     id="new-password"
                     type="password"
-                    placeholder="Enter new password"
+                    placeholder="New password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
@@ -351,6 +351,7 @@ export default function Profile() {
         .password-form {
           margin-top: 25px;
           margin-bottom: 25px;
+          width: 100%;
         }
         .password-form label {
           display: block;
@@ -365,23 +366,29 @@ export default function Profile() {
           margin-top: 35px;
           padding-top: 30px;
           border-top: 1px solid rgba(212, 157, 179, 0.2);
+          width: 100%;
         }
         .password-input-row {
           display: flex;
-          gap: 10px;
+          gap: 12px;
+          width: 100%;
+          box-sizing: border-box;
         }
         .password-input-row input {
           flex: 1;
+          min-width: 0;
           padding: 12px 15px;
           background: white;
           border: 1px solid rgba(212, 157, 179, 0.3);
           border-radius: 12px;
           outline: none;
+          font-family: inherit;
         }
         .password-input-row .btn-secondary {
-          padding: 0 20px;
-          min-width: unset;
-          height: 45px;
+          padding: 0 25px;
+          min-width: 100px;
+          height: 48px;
+          flex-shrink: 0;
         }
 
         /* History Styles */
@@ -416,7 +423,7 @@ export default function Profile() {
           line-height: 1.4;
         }
         .history-excerpt {
-          font-size: 0.9rem;
+          font-size: 1rem;
           color: var(--text);
           display: -webkit-box;
           -webkit-line-clamp: 2;
@@ -570,7 +577,7 @@ export default function Profile() {
             box-sizing: border-box;
           }
           .navbar {
-            margin-top: 10px;
+            margin-top: 20px;
             margin-bottom: 20px;
             width: 100%;
           }
