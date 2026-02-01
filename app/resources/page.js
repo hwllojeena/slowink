@@ -133,15 +133,46 @@ function ResourcesContent() {
 
   // Effect to handle deep linking on initial load
   useEffect(() => {
+    const fetchEntry = async (userId, resourceId) => {
+      const { data } = await supabase
+        .from('journal_entries')
+        .select('content')
+        .eq('user_id', userId)
+        .eq('resource_id', resourceId)
+        .single();
+
+      if (data) {
+        setJournalEntry(data.content);
+      }
+    };
+
     const modalId = searchParams.get('modal');
     if (modalId) {
       const resource = resources.find(r => r.id === modalId);
       if (resource) {
         setSelectedResource(resource);
         document.body.style.overflow = 'hidden';
+
+        // Fetch entry if user is logged in
+        if (user) {
+          fetchEntry(user.id, resource.id);
+        } else {
+          // Retry logic in case user state isn't ready yet (slight delay)
+          const checkUser = setInterval(() => {
+            supabase.auth.getSession().then(({ data: { session } }) => {
+              if (session?.user) {
+                fetchEntry(session.user.id, resource.id);
+                clearInterval(checkUser);
+              }
+            });
+          }, 500);
+
+          // Build safety valve to stop checking after 5 seconds
+          setTimeout(() => clearInterval(checkUser), 5000);
+        }
       }
     }
-  }, [searchParams]);
+  }, [searchParams, user]);
 
   const saveJournal = async () => {
     if (!selectedResource) return;
@@ -789,6 +820,12 @@ function ResourcesContent() {
           display: flex;
           flex-direction: column;
           align-items: stretch;
+        }
+        .modal-section.journaling .btn-primary {
+          align-self: center;
+          width: auto;
+          min-width: 150px;
+          padding: 14px 32px;
         }
         .modal-section h3 {
           align-self: flex-start;
