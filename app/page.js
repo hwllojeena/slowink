@@ -239,7 +239,7 @@ export default function Home() {
                 style={{ objectFit: 'contain', marginBottom: '10px' }}
               />
             </Link>
-            <p>Slow thoughts with Inky</p>
+            <p>Slow thoughts with Inky.</p>
           </div>
           <div className="footer-links">
             <div className="footer-col">
