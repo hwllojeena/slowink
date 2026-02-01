@@ -898,6 +898,21 @@ function ResourcesContent() {
           }
         }
       `}</style>
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .timer-container {
+             width: 100%;
+             max-width: calc(100vw - 80px);
+             padding: 40px 20px;
+          }
+        }
+
+        @media (max-width: 480px) {
+           .timer-container {
+             max-width: calc(100vw - 40px);
+           }
+        }
+      `}</style>
       {/* Toast Notification */}
       <Toast
         message={notification.message}
