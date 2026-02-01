@@ -362,7 +362,7 @@ export default function Home() {
         }
 
         .cta-section {
-          background-color: #fcefed;
+          background: linear-gradient(135deg, #fcefed 0%, #e6d2d9 100%);
           text-align: center;
           padding: 100px 0;
         }
