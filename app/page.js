@@ -177,7 +177,7 @@ export default function Home() {
               </div>
               <div className="showcase-info">
                 <h3>"Rest Without Guilt"</h3>
-                <p>A gentle reminder to give yourself permission to pause and take things one moment at a time.</p>
+                <p>A gentle space to allow yourself to rest without explanation.</p>
               </div>
             </div>
           </div>
