@@ -6,6 +6,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { resources } from "@/lib/data";
 import Toast from "@/components/Toast";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function Resources() {
   return (
@@ -16,7 +18,6 @@ export default function Resources() {
 }
 
 function ResourcesContent() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState("focus");
@@ -46,16 +47,7 @@ function ResourcesContent() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      showNotification("Error logging out: " + error.message, 'error');
-    } else {
-      router.push('/login');
-    }
-  };
 
   const toggleTimer = () => setIsActive(!isActive);
 
@@ -208,61 +200,7 @@ function ResourcesContent() {
 
   return (
     <main className="main-content">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="container nav-container">
-          <div className="logo">
-            <Link href="/">
-              <Image
-                src="/assets/brand-logo.png"
-                alt="Slowink logo"
-                width={180}
-                height={60}
-                className="logo-img"
-                style={{ objectFit: 'contain' }}
-                priority
-              />
-            </Link>
-          </div>
-
-          <div className="nav-links">
-            <Link href="/#about" className="nav-link">About</Link>
-            <Link href="/resources" className="nav-link active">Resources</Link>
-            {user ? (
-              <>
-                <Link href="/profile" className="nav-link">Profile</Link>
-                <button onClick={handleLogout} className="nav-link btn-link">Log out</button>
-              </>
-            ) : (
-              <Link href="/login" className="nav-link">Log in</Link>
-            )}
-            <Link href="https://shopee.co.id/" target="_blank" className="btn-primary">Get the Book</Link>
-          </div>
-
-          <button
-            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
-            onClick={toggleMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-
-        <div className={`mobile-nav ${isMenuOpen ? 'open' : ''}`}>
-          <Link href="/#about" onClick={toggleMenu}>About</Link>
-          <Link href="/resources" onClick={toggleMenu}>Resources</Link>
-          {user ? (
-            <>
-              <Link href="/profile" onClick={toggleMenu}>Profile</Link>
-              <button onClick={() => { handleLogout(); toggleMenu(); }} className="mobile-logout">Log out</button>
-            </>
-          ) : (
-            <Link href="/login" onClick={toggleMenu}>Log in</Link>
-          )}
-          <Link href="https://shopee.co.id/" target="_blank" className="btn-primary" onClick={toggleMenu}>Get the Book</Link>
-        </div>
-      </nav>
+      <Navbar />
 
       <section className="resources-hero">
 
@@ -383,37 +321,7 @@ function ResourcesContent() {
         </div>
       )}
 
-      <footer className="footer">
-        <div className="container footer-container">
-          <div className="footer-logo">
-            <Image
-              src="/assets/brand-logo.png"
-              alt="Slowink logo"
-              width={140}
-              height={45}
-              className="logo-img"
-              style={{ objectFit: 'contain', marginBottom: '10px' }}
-            />
-            <p>Slow thoughts with Inky.</p>
-          </div>
-          <div className="footer-links">
-            <div className="footer-col">
-              <h4>Explore</h4>
-              <Link href="/#about">About</Link>
-              <Link href="/resources">Resources</Link>
-            </div>
-            <div className="footer-col">
-              <h4>Connect</h4>
-              <a href="https://www.instagram.com/slowink.id/" target="_blank">Instagram</a>
-              <a href="https://www.tiktok.com/en/" target="_blank">TikTok</a>
-              <a href="https://shopee.co.id/" target="_blank">Shopee</a>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} Slowink. Handcrafted with care.</p>
-        </div>
-      </footer>
+      <Footer />
 
       <style jsx global>{`
         .resources-hero {
@@ -595,84 +503,6 @@ function ResourcesContent() {
           font: inherit;
           cursor: pointer;
           padding: 0;
-        }
-        
-        /* Navbar specific for resources */
-        .navbar {
-          position: relative;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          z-index: 1000;
-          background: #fafafa;
-          margin-top: 20px;
-          margin-bottom: 20px;
-          border-radius: var(--rounded);
-        }
-        .nav-container {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-        }
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 30px;
-        }
-        .hamburger {
-          display: none;
-          flex-direction: column;
-          justify-content: space-between;
-          width: 30px;
-          height: 20px;
-          background: none;
-          border: none;
-          z-index: 1100;
-        }
-        .hamburger span {
-          display: block;
-          height: 3px;
-          width: 100%;
-          background: var(--secondary);
-          border-radius: 10px;
-          transition: var(--transition);
-        }
-        .mobile-nav {
-          position: fixed;
-          top: 0;
-          right: -100%;
-          width: 80%;
-          height: 100vh;
-          background: #fafafa;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 30px;
-          transition: var(--transition);
-        }
-        .mobile-nav a, .mobile-logout {
-          font-size: 1.2rem;
-          font-weight: 600;
-          color: var(--secondary);
-          text-decoration: none;
-        }
-        .mobile-logout {
-          background: none;
-          border: none;
-          font-family: inherit;
-          cursor: pointer;
-          padding: 0;
-        }
-        
-        .mobile-nav .btn-primary {
-          color: var(--white) !important;
-          margin-top: 10px;
-        }
-
-        .mobile-nav.open {
-          right: 0;
         }
         
         .logo-img {
