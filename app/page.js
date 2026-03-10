@@ -38,7 +38,7 @@ export default function Home() {
               Gentle illustrations and motivational quotes to help you slow down and breathe.
             </p>
             <div className="hero-btns">
-              <a href="https://shopee.co.id/" target="_blank" className="btn-primary">Start Coloring</a>
+              <a href="https://shopee.co.id/slowink_art" target="_blank" className="btn-primary">Start Coloring</a>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function Home() {
             <div className="showcase-item glass">
               <div className="preview-container">
                 <Image
-                  src="/assets/rest-without-guilt.png"
+                  src="/assets/rest-without-guilt-v2.png"
                   alt="Rest Without Guilt Coloring Page"
                   width={400}
                   height={400}
@@ -92,7 +92,8 @@ export default function Home() {
               </div>
               <div className="showcase-info">
                 <h3>"Rest Without Guilt"</h3>
-                <p>A gentle space to allow yourself to rest without explanation.</p>
+                <p>A permission slip to pause without needing to earn it or justify yourself.
+                </p>
               </div>
             </div>
           </div>
@@ -135,7 +136,7 @@ export default function Home() {
           <div className="cta-content">
             <h2>Ready to slow down?</h2>
             <p>Join Inky on a journey of calm and creativity.</p>
-            <a href="https://shopee.co.id/" target="_blank" className="btn-primary">Order Your Copy Now 🍊</a>
+            <a href="https://shopee.co.id/slowink_art" target="_blank" className="btn-primary">Order Your Copy Now 🍊</a>
           </div>
         </div>
       </section>

@@ -65,7 +65,7 @@ export default function Navbar() {
           ) : (
             <Link href="/login" className="nav-link">Log in</Link>
           )}
-          <Link href="https://shopee.co.id/" target="_blank" className="btn-primary">Get the Book</Link>
+          <Link href="https://shopee.co.id/slowink_art" target="_blank" className="btn-primary">Get the Book</Link>
         </div>
 
         {/* Hamburger Button */}
@@ -92,7 +92,7 @@ export default function Navbar() {
         ) : (
           <Link href="/login" onClick={toggleMenu}>Log in</Link>
         )}
-        <Link href="https://shopee.co.id/" target="_blank" className="btn-primary" onClick={toggleMenu}>Get the Book</Link>
+        <Link href="https://shopee.co.id/slowink_art" target="_blank" className="btn-primary" onClick={toggleMenu}>Get the Book</Link>
       </div>
 
       <style jsx>{`

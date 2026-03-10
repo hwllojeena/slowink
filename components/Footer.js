@@ -29,7 +29,7 @@ export default function Footer() {
             <h4>Connect</h4>
             <a href="https://www.instagram.com/slowink.id/" target="_blank" rel="noopener noreferrer">Instagram</a>
             <a href="https://www.tiktok.com/@slowink.id" target="_blank" rel="noopener noreferrer">TikTok</a>
-            <a href="https://shopee.co.id/" target="_blank" rel="noopener noreferrer">Shopee</a>
+            <a href="https://shopee.co.id/slowink_art" target="_blank" rel="noopener noreferrer">Shopee</a>
           </div>
         </div>
       </div>

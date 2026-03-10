@@ -22,7 +22,35 @@ function ResourcesContent() {
   const [isActive, setIsActive] = useState(false);
   const [mode, setMode] = useState("focus");
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentAudioUrl, setCurrentAudioUrl] = useState("");
   const audioRef = useRef(null);
+
+  const audioList = [
+    "back%20to%20home.mp3",
+    "coastal%20road.mp3",
+    "deep%20dreaming.mp3",
+    "Distant%20Memories.mp3",
+    "For%20Your%20Love.mp3",
+    "Half%20Full.mp3",
+    "long%20road.mp3",
+    "Manhattan%20Sun.mp3",
+    "night%20walk.mp3",
+    "rain%20come%20again.mp3",
+    "St4rgaze.mp3",
+    "still%20here.mp3"
+  ];
+  const audioBaseUrl = "https://byqwpgyipyyrnwsnxhia.supabase.co/storage/v1/object/public/Audio/";
+
+  const playRandomAudio = () => {
+    let nextAudio = "";
+    do {
+      const randomIndex = Math.floor(Math.random() * audioList.length);
+      nextAudio = `${audioBaseUrl}${audioList[randomIndex]}`;
+    } while (nextAudio === currentAudioUrl && audioList.length > 1);
+
+    setCurrentAudioUrl(nextAudio);
+    setIsPlaying(true);
+  };
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -32,6 +60,13 @@ function ResourcesContent() {
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
   };
+
+  useEffect(() => {
+    if (currentAudioUrl && isPlaying && audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play().catch(err => console.error("Audio play failed:", err));
+    }
+  }, [currentAudioUrl, isPlaying]);
 
   useEffect(() => {
     // Check active session
@@ -54,10 +89,18 @@ function ResourcesContent() {
   const toggleAudio = () => {
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.play().catch(err => console.error("Audio play failed:", err));
+      if (!currentAudioUrl) {
+        playRandomAudio();
+      } else {
+        audioRef.current.play().catch(err => {
+          console.error("Audio play failed:", err);
+          playRandomAudio();
+        });
+        setIsPlaying(true);
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
   const resetTimer = (newMode = mode) => {
@@ -255,8 +298,8 @@ function ResourcesContent() {
 
             <audio
               ref={audioRef}
-              src="https://kshdgxthmfabghipefmb.supabase.co/storage/v1/object/public/Audio/no%20ads%20music%20LoFi%20Spring%20_%20Perfect%20Background%20Music%20for%20studying%20Spring%20Vol3%20lofi%20hip%20hop.mp3"
-              loop
+              src={currentAudioUrl}
+              onEnded={playRandomAudio}
             />
           </div>
         </div>
