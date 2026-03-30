@@ -30,7 +30,13 @@ export default function Signup() {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: name, // Simpan di sini sebagai cadangan (metadata)
+          },
+        },
       });
+
 
       if (authError) throw authError;
 
@@ -38,9 +44,11 @@ export default function Signup() {
         // 2. Create the user profile
         const { error: profileError } = await supabase
           .from('profiles')
-          .insert({
+          .upsert({
             id: authData.user.id,
             full_name: name,
+          }, {
+            onConflict: 'id' // Ini perintah agar tidak error jika ID sudah ada
           });
 
         if (profileError) throw profileError;
