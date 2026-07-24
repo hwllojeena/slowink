@@ -27,15 +27,15 @@ export default function Footer() {
           </div>
           <div className="footer-col">
             <h4>Connect</h4>
-            <a href="https://www.instagram.com/slowink.id/" target="_blank" rel="noopener noreferrer">Instagram</a>
-            <a href="https://www.tiktok.com/@slowink.id" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a href="https://www.instagram.com/slowink_art" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.tiktok.com/@slowink_art" target="_blank" rel="noopener noreferrer">TikTok</a>
             <a href="https://shopee.co.id/slowink_art" target="_blank" rel="noopener noreferrer">Shopee</a>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} Slowink. Handcrafted with care by <a href="https://www.tiktok.com/@slowink.id" target="_blank" rel="noopener noreferrer" className="author-link">author</a>.
+          &copy; {new Date().getFullYear()} Slowink. Handcrafted with care by <a href="https://www.tiktok.com/@slowink_art" target="_blank" rel="noopener noreferrer" className="author-link">author</a>.
         </p>
       </div>
 
